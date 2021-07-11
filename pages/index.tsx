@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import {HomeView} from './HomeView'
 
-export default () => {
+const Index = () => {
     return (
         <>
             <Head>
@@ -13,3 +13,5 @@ export default () => {
         </>
     )
 }
+
+export default Index
