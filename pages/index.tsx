@@ -2,6 +2,8 @@ import Head from 'next/head'
 import { HomeView } from './HomeView'
 import { useSelector } from 'react-redux'
 import { quoteManagementSelector } from '../app/domain/quoteManagement/selector/QuoteManagementSelector'
+import { wrapper } from '../app/Store'
+import { quoteManagementActions } from '../app/domain/quoteManagement/ducks/QuoteManagementDucks'
 
 const Index = () => {
 
@@ -18,5 +20,12 @@ const Index = () => {
         </>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async () => {
+    await store.dispatch(quoteManagementActions.fetchRequest())
+    return {
+        props: {},
+    }
+})
 
 export default Index
