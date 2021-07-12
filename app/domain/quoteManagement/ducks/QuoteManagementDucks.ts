@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface QuoteManagementState {
     quotes: Array<string>
@@ -11,7 +11,18 @@ const initialState: QuoteManagementState = {
 const quoteManagementSlice = createSlice({
     name: 'quoteManagement',
     initialState,
-    reducers: {},
+    reducers: {
+        fetchRequest: (state) => {
+            return state
+        },
+        fetchSuccess: (state, action: PayloadAction<{ quotes: Array<string> }>) => {
+            const { quotes } = action.payload
+            state.quotes = quotes
+        },
+        fetchFailure: (state, action: PayloadAction<Error>) => {
+            return state
+        },
+    },
 })
 
 export const quoteManagementActions = {

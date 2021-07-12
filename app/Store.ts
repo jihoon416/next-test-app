@@ -3,11 +3,14 @@ import { createWrapper } from 'next-redux-wrapper'
 import { rootReducer } from './RootReducer'
 import { createEpicMiddleware } from 'redux-observable'
 import { EpicDependency, rootEpic } from './RootEpic'
+import { QuotesAPI } from '../api/QuotesAPI'
 
 export type RootState = ReturnType<typeof rootReducer>
 
 const epicMiddleware = createEpicMiddleware<AnyAction, AnyAction, RootState, EpicDependency>({
-    dependencies: {},
+    dependencies: {
+        quotesAPI: QuotesAPI,
+    },
 })
 
 const makeStore = () => {
