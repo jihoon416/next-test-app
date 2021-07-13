@@ -7,13 +7,14 @@ import { QuotesAPI } from '../api/QuotesAPI'
 
 export type RootState = ReturnType<typeof rootReducer>
 
-const epicMiddleware = createEpicMiddleware<AnyAction, AnyAction, RootState, EpicDependency>({
-    dependencies: {
-        quotesAPI: QuotesAPI,
-    },
-})
-
 const makeStore = () => {
+
+    const epicMiddleware = createEpicMiddleware<AnyAction, AnyAction, RootState, EpicDependency>({
+        dependencies: {
+            quotesAPI: QuotesAPI,
+        },
+    })
+
     const store = configureStore({
         reducer: rootReducer,
         devTools: true,
@@ -24,7 +25,9 @@ const makeStore = () => {
             epicMiddleware,
         ],
     })
+
     epicMiddleware.run(rootEpic)
+
     return store
 }
 

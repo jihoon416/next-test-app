@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { quoteManagementSelector } from '../app/domain/quoteManagement/selector/QuoteManagementSelector'
 import { wrapper } from '../app/Store'
 import { quoteManagementActions } from '../app/domain/quoteManagement/ducks/QuoteManagementDucks'
+import { QuotesAPI } from '../api/QuotesAPI'
 
 const Index = () => {
 
@@ -22,7 +23,10 @@ const Index = () => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async () => {
-    await store.dispatch(quoteManagementActions.fetchRequest())
+
+    const quotes = await QuotesAPI.fetchQuotes()
+
+    store.dispatch(quoteManagementActions.fetchSuccess({ quotes }))
     return {
         props: {},
     }

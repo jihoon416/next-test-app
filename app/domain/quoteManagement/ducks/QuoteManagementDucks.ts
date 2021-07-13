@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { HYDRATE } from 'next-redux-wrapper'
 
 interface QuoteManagementState {
     quotes: Array<string>
@@ -20,8 +21,18 @@ const quoteManagementSlice = createSlice({
             state.quotes = quotes
         },
         fetchFailure: (state, action: PayloadAction<Error>) => {
+            console.error(action.payload)
             return state
         },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addMatcher((action) => action.type === HYDRATE, (state, action) => {
+                return {
+                    ...state,
+                    ...action.payload.quoteManagement,
+                }
+            })
     },
 })
 
