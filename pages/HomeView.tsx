@@ -1,13 +1,18 @@
 import styled from '@emotion/styled'
-import Link from 'next/link'
 
-export const HomeView = () => {
+interface Props {
+    quotes: Array<string>
+}
+
+export const HomeView = (props: Props) => {
+
+    const { quotes } = props
+
     return (
         <Container>
-            <h1>Hello World!</h1>
-            <Link href={'/posts/first-post'}>
-                <a>This Link</a>
-            </Link>
+            {quotes.map((quote, index) => (
+                <h1 key={index}>{quote}</h1>
+            ))}
         </Container>
     )
 }
